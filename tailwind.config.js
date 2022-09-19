@@ -8,8 +8,8 @@ module.exports = {
     extend: {
       colors: {
         biruAlta: "#1B345F",
-        orangeAlta: "F7731C",
-        putihAlta: "F0F4FD",
+        orangeAlta: "#F7731C",
+        putihAlta: "#F0F4FD",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
