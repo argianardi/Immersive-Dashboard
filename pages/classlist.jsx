@@ -4,32 +4,23 @@ import Sidebar from '../components/sidebar'
 import Pagination from '@mui/material/Pagination';
 import Search from '../components/search';
 import Tabellist from '../components/tabellist';
-// import Link from 'next/link'
-// import Router, { useRouter } from "next/router";
-// import { Icon } from '@iconify/react';
-// import Stack from '@mui/material/Stack';
 
-
-const Userlist = () => {
+const Classlist = () => {
     const [pageApi, setPageApi] = useState(1);
-    const [pagenow, setPagenow] = useState('User List');
-    const [judultabel, setJudultabel] = useState(['Fullname', 'Email', 'Team', 'Role', 'Status']);
+    const [pagenow, setPagenow] = useState('Class List');
+    const [judultabel, setJudultabel] = useState(['Name', "", "", "", ""]);
     const [tabel, setTabel] = useState([
         {
             no: 1,
-            fullname: "Rachman Kamil",
-            email: "kamil@alterra.co.id",
-            team: "Academic",
-            role: "Default",
-            status: "Active"
+            fullname: "Frontend Engineer Batch 8",
         },
         {
             no: 2,
-            fullname: "Dian",
-            email: "dian@alterra.co.id",
-            team: "People",
-            role: "Admin",
-            status: "Active"
+            fullname: "Frontend Engineer Batch 11",
+        },
+        {
+            no: 3,
+            fullname: "Quality Assurance Batch 3",
         },
     ])
 
@@ -53,4 +44,4 @@ const Userlist = () => {
     )
 }
 
-export default Userlist
+export default Classlist
