@@ -9,13 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.6",
+    "@mui/styled-engine-sc": "^5.10.6",
     "axios": "^0.27.2",
+    "chart.js": "^3.9.1",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-audio-player": "^0.17.0",
+    "react-chartjs-2": "^4.3.1",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.11",
