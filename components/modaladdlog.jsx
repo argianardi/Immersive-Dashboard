@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 // import file from "../public/img/antdesign.svg";
 import { GiFlowerStar } from "react-icons/gi";
-import { RiArrowDropUpLine } from "react-icons/ri";
-import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Modaladdlog = () => {
     return (
@@ -73,7 +71,7 @@ const Modaladdlog = () => {
                                 className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-biruAlta active:bg-yellow-700 hover:shadow-lg focus:outline-none"
                                 type="button"
                             >
-                                Submit
+                                Save
                             </button>
                         </div>
                     </div>
