@@ -78,13 +78,13 @@ const Menteelist = () => {
                             {datas.map((item, index) => {
                                 return (
                                     <tr key={index} className='border-[#bababa] border-b-[1px]'>
-                                        <td className='' >1</td>
-                                        <td>Rachman Kamil</td>
-                                        <td>BE 11</td>
-                                        <td>Active</td>
-                                        <td>IT</td>
-                                        <td>Male</td>
-                                        <td><button className='active:bg-[#1B345F] text-[#21a41f] active:text-white rounded'><Icon icon="ant-design:edit-outlined" width="26" height="24" /></button ></td>
+                                        <td className='' >{index + 1}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.class}</td>
+                                        <td>{item.status}</td>
+                                        <td>{item.category}</td>
+                                        <td>{item.gender}</td>
+                                        <td><button className='active:bg-[#1B345F] text-[#21a41f] active:text-white rounded'><Icon icon="bxs:user-detail" color="#1b345f" width="24" height="24" /></button ></td>
                                         <td><button className='active:bg-[#1B345F] text-[#21a41f] active:text-white rounded'><Icon icon="ant-design:edit-outlined" width="26" height="24" /></button ></td>
                                         <td><button className='active:bg-[#1B345F] text-[#21a41f] active:text-white rounded'><Icon icon="fluent:delete-12-regular" width="22" height="22" /></button></td>
                                     </tr>
