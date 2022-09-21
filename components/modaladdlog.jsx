@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import file from "../public/img/antdesign.svg";
 import { GiFlowerStar } from "react-icons/gi";
 
 const Modaladdlog = () => {
