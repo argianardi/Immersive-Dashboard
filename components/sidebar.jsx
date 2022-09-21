@@ -55,7 +55,7 @@ const Sidebar = ({ pagenow }) => {
                     <MenuItem className='hover:bg-[#1B345F] hover:text-white' onClick={handleClose}><Icon className='mt-2 mr-2' icon="oi:account-logout" />Logout</MenuItem>
                 </Menu>
             </div>
-            <div className='dropnav:hidden'>
+            <div className='h-screen dropnav:hidden'>
                 <div className='justify-center sm:justify-start sm:flex-none my-[19px] flex rounded-lg sm:px-[5px] text-[#1B345F] hover:bg-[#1B345F] hover:text-white'>
                     <Icon className='mt-1' icon="carbon:dashboard" />
                     <h2 className='ml-[15px] mb-1'>Dashboard</h2>
@@ -70,7 +70,7 @@ const Sidebar = ({ pagenow }) => {
                 </div>
                 <div className='justify-center sm:justify-start flex rounded-lg px-[5px] text-[#1B345F] hover:bg-[#1B345F] hover:text-white'>
                     <Icon className='mt-1' icon="eos-icons:storage-class-outlined" />
-                    <h2 className='ml-[15px] mb-1'>Storage</h2>
+                    <h2 className='ml-[15px] mb-1'>Class</h2>
                 </div>
                 <div className='justify-center sm:justify-start flex rounded-lg px-[5px] text-[#1B345F] hover:bg-[#1B345F] hover:text-white mt-[19px]'>
                     <Icon className='mt-2' icon="oi:account-logout" />
