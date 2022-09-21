@@ -4,10 +4,6 @@ import Sidebar from '../components/sidebar'
 import Pagination from '@mui/material/Pagination';
 import Search from '../components/search';
 import Tabellist from '../components/tabellist';
-// import Link from 'next/link'
-// import Router, { useRouter } from "next/router";
-// import { Icon } from '@iconify/react';
-// import Stack from '@mui/material/Stack';
 
 
 const Userlist = () => {
