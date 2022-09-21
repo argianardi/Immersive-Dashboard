@@ -1,5 +1,6 @@
 import axios from "axios";
 import Head from "next/head";
+import Router from "next/router";
 import { useState } from "react";
 import { BiCookie, BiLockAlt, BiMailSend } from "react-icons/bi";
 
@@ -8,6 +9,9 @@ export default function Home() {
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
+        Router.push({
+            pathname: "/dashboard",
+        });
         e.preventDefault();
         await axios
             .post("https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/login", {
