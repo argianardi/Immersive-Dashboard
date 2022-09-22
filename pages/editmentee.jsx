@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Doubleradio from "../components/doubleradio";
 import Formaddmentee from "../components/formaddmentee";
 import Inputaddmentee from "../components/inputaddmentee";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import Router, { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const AddMentee = () => {
   const router = useRouter();
@@ -24,55 +25,14 @@ const AddMentee = () => {
   const [graduate, setGraduate] = useState("");
   const [mentees, setMentees] = useState([]);
 
-  //   const addNewMentee = (e) => {
-  //     e.preventDefault();
-  //     // var axios = require("axios");
-  //     // var data = JSON.stringify({
-  //     //   name: name,
-  //     //   gender: gender,
-  //     //   address: address,
-  //     //   home_address: homeAddress,
-  //     //   class_id: 1,
-  //     //   email: email,
-  //     //   telegram: telegram,
-  //     //   phone: "085712344321",
-  //     //   category: type,
-  //     //   name_ed: nameEd,
-  //     //   phone_ed: phoneEd,
-  //     //   status_ed: status,
-  //     //   major: major,
-  //     //   graduate: graduate,
-  //     // });
-
-  //     // var config = {
-  //     //   method: "post",
-  //     //   url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees",
-  //     //   headers: {
-  //     //     "Content-Type": "application/json",
-  //     //   },
-  //     //   data: data,
-  //     // };
-
-  //     // axios(config)
-  //     //   .then(function (response) {
-  //     //     console.log(JSON.stringify(response));
-  //     //   })
-  //     //   .catch(function (error) {
-  //     //     console.log(error);
-  //     //   });
-  //   };
-
   const handleGender = (event) => {
     setGender(event.target.value);
-    console.log(event.target.value);
   };
   const handleType = (event) => {
     setType(event.target.value);
-    console.log(event.target.value);
   };
   const handleStatus = (event) => {
     setStatus(event.target.value);
-    console.log(event.target.value);
   };
 
   //   -----------------put mentee
@@ -84,22 +44,23 @@ const AddMentee = () => {
       gender: gender,
       address: address,
       home_address: homeAddress,
-      class_id: classId,
+      class_id: parseInt(classId),
       email: email,
       telegram: telegram,
       phone: phoneEd,
-      category: type,
+      category: type, //IT
       name_ed: nameEd,
       phone_ed: phoneEd,
-      status_ed: status,
+      status_ed: status, //keluarga
       major: major,
       graduate: graduate,
     });
 
     var config = {
       method: "put",
-      url: `https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees/${router.query.menteeId}`,
+      url: "https://altagp3.online/mentees/10",
       headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
         "Content-Type": "application/json",
       },
       data: data,
@@ -107,7 +68,7 @@ const AddMentee = () => {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         router.push("/menteelist");
       })
       .catch(function (error) {
@@ -191,7 +152,7 @@ const AddMentee = () => {
               label="Type"
               option1="IT"
               option2="non-IT"
-              choose={(value) => handleGender(value)}
+              choose={(value) => handleType(value)}
             />
             <Inputaddmentee
               type="text"

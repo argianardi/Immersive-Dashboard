@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+import { Phone } from "@mui/icons-material";
+import Cookies from "js-cookie";
+import Router, { useRouter } from "next/router";
 import React, { useState } from "react";
 import Doubleradio from "../components/doubleradio";
 import Formaddmentee from "../components/formaddmentee";
@@ -38,30 +40,31 @@ const AddMentee = () => {
   };
 
   //   -----------------post mentee
+
   const handleAddMentee = () => {
-    // console.log("berhasil menambahkan");
     var axios = require("axios");
     var data = JSON.stringify({
       name: name,
       gender: gender,
       address: address,
       home_address: homeAddress,
-      class_id: classId,
+      class_id: parseInt(classId),
       email: email,
       telegram: telegram,
-      phone: "085712344321",
-      category: type,
+      phone: phoneEd,
+      category: type, //IT
       name_ed: nameEd,
       phone_ed: phoneEd,
-      status_ed: status,
+      status_ed: status, //keluarga
       major: major,
       graduate: graduate,
     });
 
     var config = {
       method: "post",
-      url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees",
+      url: "https://altagp3.online/mentees",
       headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
         "Content-Type": "application/json",
       },
       data: data,
@@ -70,10 +73,13 @@ const AddMentee = () => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        // Router.push({ pathname: "/menteelist" });
+        // Router.push(`/menteelist`);
         router.push("/menteelist");
       })
       .catch(function (error) {
         console.log(error);
+        console.log(typeof phoneEd);
       });
   };
 
@@ -124,7 +130,7 @@ const AddMentee = () => {
               onChange={(e) => setTelegram(e.target.value)}
             />
             <Inputaddmentee
-              type="text"
+              type="number"
               label="Class Id"
               placeholder="Class Id"
               onChange={(e) => setClassId(e.target.value)}
@@ -139,7 +145,7 @@ const AddMentee = () => {
               onChange={(e) => setNameEd(e.target.value)}
             />
             <Inputaddmentee
-              type="number"
+              type="text"
               label="Phone Number"
               placeholder="Phone Number of Spouse/parent/sibling"
               onChange={(e) => setPhoneEd(e.target.value)}

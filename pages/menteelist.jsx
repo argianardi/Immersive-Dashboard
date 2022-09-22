@@ -5,29 +5,13 @@ import Pagination from "@mui/material/Pagination";
 import Search from "../components/search";
 import { Icon } from "@iconify/react";
 import Router, { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const Menteelist = () => {
   const [pageApi, setPageApi] = useState(1);
   const [pagenow, setPagenow] = useState("Mentee List");
   const router = useRouter();
-  const [mentees, setMentees] = useState([
-    {
-      no: 1,
-      name: "Rachman Kamil",
-      class: "BE 11",
-      status: "Active",
-      category: "IT",
-      gender: "Male",
-    },
-    {
-      no: 1,
-      name: "Rachman Kamil",
-      class: "BE 11",
-      status: "Active",
-      category: "IT",
-      gender: "Male",
-    },
-  ]);
+  const [mentees, setMentees] = useState([]);
 
   // -----------------get mentee
   useEffect(() => {
@@ -39,9 +23,10 @@ const Menteelist = () => {
 
     var config = {
       method: "get",
-      url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees",
+      url: "https://altagp3.online/mentees",
       headers: {
         accept: "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
     };
 
@@ -67,15 +52,15 @@ const Menteelist = () => {
 
     var config = {
       method: "delete",
-      url: `https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees/${menteeId}`,
+      url: `https://altagp3.online/mentees/${menteeId}`,
       headers: {
-        accept: "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
     };
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         getMentee();
       })
       .catch(function (error) {
@@ -93,12 +78,19 @@ const Menteelist = () => {
     });
   };
 
+  const addingMentee = () => {
+    Router.push({
+      pathname: "/addMentee",
+    });
+  };
+
   return (
     <div className="w-full h-full sm:flex">
       <Sidebar pagenow={pagenow} />
       <div className="w-full sm:px-12">
         <Navbar pagenow={pagenow} />
-        <Search />
+        <Search showingmodal={addingMentee} />
+
         <div className="flex justify-center mt-12 sm:justify-end">
           <div className="flex flex-col sm:flex-row">
             <button className="w-32 h-9 text-sm text-white rounded-lg bg-[#1B345F]">
@@ -193,7 +185,7 @@ const Menteelist = () => {
                     </td>
                     <td>
                       <button
-                        className="active:bg-[#1B345F] text-[#21a41f] active:text-white rounded"
+                        className="active:bg-[#1B345F] text-rose-700 active:text-white rounded"
                         onClick={(e) => deleteMentee(item.id)}
                       >
                         <Icon
