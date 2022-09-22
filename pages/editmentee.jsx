@@ -58,7 +58,7 @@ const AddMentee = () => {
 
     var config = {
       method: "put",
-      url: "https://altagp3.online/mentees/10",
+      url: `https://altagp3.online/mentees/${router.query.menteeId}`,
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
         "Content-Type": "application/json",
