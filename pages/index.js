@@ -3,15 +3,13 @@ import Head from "next/head";
 import Router from "next/router";
 import { useState } from "react";
 import { BiCookie, BiLockAlt, BiMailSend } from "react-icons/bi";
+import cookie from "js-cookie";
 
 export default function Home() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
-        Router.push({
-            pathname: "/dashboard",
-        });
         e.preventDefault();
         await axios
             .post("https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/login", {
@@ -19,8 +17,9 @@ export default function Home() {
                 password: password,
             })
             .then((response) => {
-                localStorage.setItem("token", response.data.data.token);
-                localStorage.setItem("role", response.data.data.role);
+                cookie.set("token", response.data.data.token);
+                cookie.set("role", response.data.data.role);
+                response.data.data.role === "superadmin" ? Router.push({ pathname: "/dashboard" }) : Router.push({ pathname: "/testing" });
             })
             .catch((error) => console.log(error));
     };
