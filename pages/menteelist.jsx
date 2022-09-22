@@ -7,6 +7,8 @@ import { Icon } from "@iconify/react";
 import Router, { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import categoryOptions from "../categoryOptions.json";
+import statusOptions from "../statusOptions.json";
+import classOptions from "../classOptions.json";
 
 const Menteelist = () => {
     const [pageApi, setPageApi] = useState(1);
@@ -14,6 +16,8 @@ const Menteelist = () => {
     const router = useRouter();
     const [mentees, setMentees] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("all");
+    const [selectedStatus, setSelectedStatus] = useState("all");
+    const [selectedClass, setSelectedClass] = useState("all");
     const [dataFilter, setDataFilter] = useState(false);
 
     // -----------------get mentee
@@ -123,19 +127,37 @@ const Menteelist = () => {
                     <div className="flex flex-col sm:flex-row">
                         <button className="w-32 h-9 text-sm text-white rounded-lg bg-[#1B345F]">Export</button>
                         <form className="hilang:my-2 mx-0.5">
-                            <select className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]" id="status" name="status">
-                                <option value="All Class">All Class</option>
-                                <option value="QE 7">QE 7</option>
-                                <option value="FE 8">FE 8</option>
-                                <option value="BE 11">BE 11</option>
+                            <select
+                                className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]"
+                                id="status"
+                                name="status"
+                                onChange={(e) => setSelectedClass(e.target.value)}
+                                value={selectedClass}
+                            >
+                                {classOptions.map((option, i) => {
+                                    return (
+                                        <option value={option.value} key={i}>
+                                            {option.class}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </form>
                         <form className="mx-0.5">
-                            <select className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]" id="status" name="status">
-                                <option value="All Class">All Status</option>
-                                <option value="QE 7">Placement</option>
-                                <option value="FE 8">Active</option>
-                                <option value="BE 11">Eleminate</option>
+                            <select
+                                className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]"
+                                id="status"
+                                name="status"
+                                onChange={(e) => setSelectedStatus(e.target.value)}
+                                value={selectedStatus}
+                            >
+                                {statusOptions.map((option, i) => {
+                                    return (
+                                        <option value={option.value} key={i}>
+                                            {option.status}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </form>
                         <form className=" mx-0.5">
