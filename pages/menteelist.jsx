@@ -5,29 +5,13 @@ import Pagination from "@mui/material/Pagination";
 import Search from "../components/search";
 import { Icon } from "@iconify/react";
 import Router, { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const Menteelist = () => {
   const [pageApi, setPageApi] = useState(1);
   const [pagenow, setPagenow] = useState("Mentee List");
   const router = useRouter();
-  const [mentees, setMentees] = useState([
-    {
-      no: 1,
-      name: "Rachman Kamil",
-      class: "BE 11",
-      status: "Active",
-      category: "IT",
-      gender: "Male",
-    },
-    {
-      no: 1,
-      name: "Rachman Kamil",
-      class: "BE 11",
-      status: "Active",
-      category: "IT",
-      gender: "Male",
-    },
-  ]);
+  const [mentees, setMentees] = useState([]);
 
   // -----------------get mentee
   useEffect(() => {
@@ -39,9 +23,10 @@ const Menteelist = () => {
 
     var config = {
       method: "get",
-      url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees",
+      url: "https://altagp3.online/mentees",
       headers: {
         accept: "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
       },
     };
 
@@ -98,7 +83,7 @@ const Menteelist = () => {
       <Sidebar pagenow={pagenow} />
       <div className="w-full sm:px-12">
         <Navbar pagenow={pagenow} />
-        <Search />
+        <Search showingmodal={router.push(`/addMentee`)} />
         <div className="flex justify-center mt-12 sm:justify-end">
           <div className="flex flex-col sm:flex-row">
             <button className="w-32 h-9 text-sm text-white rounded-lg bg-[#1B345F]">
