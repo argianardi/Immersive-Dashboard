@@ -6,9 +6,9 @@ import Search from "../components/search";
 import { Icon } from "@iconify/react";
 import Router, { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import categoryOptions from "../categoryOptions.json";
-import statusOptions from "../statusOptions.json";
-import classOptions from "../classOptions.json";
+import categoryOptions from "../JSON/categoryOptions.json";
+import statusOptions from "../JSON/statusOptions.json";
+import classOptions from "../JSON/classOptions.json";
 
 const Menteelist = () => {
     const [pageApi, setPageApi] = useState(1);
