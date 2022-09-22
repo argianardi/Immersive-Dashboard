@@ -145,13 +145,9 @@ const Menteelist = () => {
                         </form>
                         <form className=" mx-0.5">
                             <select className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]" id="status" name="status" onClick={() => filterMenteeByCategory()}>
-                                <option value="All Class" onClick={getMentee}>
-                                    All Categories
-                                </option>
+                                <option value="All Class">All Categories</option>
                                 <option value="QE 7">Informatics</option>
-                                <option value="FE 8" onClick={() => filterMenteeByCategory(setCategory(""))}>
-                                    Non-Informatics
-                                </option>
+                                <option value="FE 8">Non-Informatics</option>
                             </select>
                         </form>
                         <button className="hilang:my-2 ml-0.5 w-32 h-9 text-sm text-white rounded-lg bg-[#1B345F]">Filter</button>
