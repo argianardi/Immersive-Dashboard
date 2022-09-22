@@ -52,10 +52,10 @@ const AddMentee = () => {
       email: email,
       telegram: telegram,
       phone: phoneEd,
-      category: type,
+      category: type, //IT
       name_ed: nameEd,
       phone_ed: phoneEd,
-      status_ed: status,
+      status_ed: status, //keluarga
       major: major,
       graduate: graduate,
     });
@@ -73,9 +73,9 @@ const AddMentee = () => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        Router.push({ pathname: "/menteelist" });
+        // Router.push({ pathname: "/menteelist" });
         // Router.push(`/menteelist`);
-        // router.push({"/menteelist"});
+        router.push("/menteelist");
       })
       .catch(function (error) {
         console.log(error);
