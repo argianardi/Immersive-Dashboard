@@ -28,7 +28,7 @@ const Menteelist = () => {
     const getMentee = () => {
         var axios = require("axios");
 
-        if (selectedCategory === "all") {
+        if (selectedCategory === "all" && selectedStatus === "all" && selectedClass === "all") {
             var config = {
                 method: "get",
                 url: "https://altagp3.online/mentees",
@@ -38,14 +38,34 @@ const Menteelist = () => {
                 },
             };
         } else {
-            var config = {
-                method: "get",
-                url: `https://altagp3.online/mentees?category=${selectedCategory}`,
-                headers: {
-                    accept: "application/json",
-                    Authorization: `Bearer ${Cookies.get("token")}`,
-                },
-            };
+            if (selectedCategory !== "all") {
+                var config = {
+                    method: "get",
+                    url: `https://altagp3.online/mentees?category=${selectedCategory}`,
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
+                    },
+                };
+            } else if (selectedStatus !== "all") {
+                var config = {
+                    method: "get",
+                    url: `https://altagp3.online/mentees?status=${selectedStatus}`,
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
+                    },
+                };
+            } else if (selectedClass !== "all") {
+                var config = {
+                    method: "get",
+                    url: `https://altagp3.online/mentees?class_id=${selectedClass}`,
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
+                    },
+                };
+            }
         }
 
         axios(config)

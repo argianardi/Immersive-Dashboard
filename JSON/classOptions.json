@@ -4,15 +4,15 @@
         "class": "All Class"
     },
     {
-        "value": "BE 11",
+        "value": 2,
         "class": "BE BATCH 11"
     },
     {
-        "value": "FE 8",
+        "value": 3,
         "class": "FE BATCH 8"
     },
     {
-        "value": "BE 12",
+        "value": 1,
         "class": "BE BATCH 12"
     }
 ]
