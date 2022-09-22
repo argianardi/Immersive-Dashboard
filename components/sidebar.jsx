@@ -55,7 +55,7 @@ const Sidebar = ({ pagenow }) => {
               onClick={handleClose}
             >
               <Icon className="mr-2 " icon="carbon:dashboard" />
-              Dasboarb
+              Dasboard
             </MenuItem>
           </Link>
 
