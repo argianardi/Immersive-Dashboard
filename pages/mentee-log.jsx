@@ -1,38 +1,107 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsPersonBadge } from "react-icons/bs";
 import { FaGraduationCap } from "react-icons/fa";
 import { ImLibrary } from "react-icons/im";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { TbPhone, TbMail, TbBrandTelegram } from "react-icons/tb";
 import { GiFlowerStar } from "react-icons/gi";
+import Router, { useRouter } from "next/router";
 
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
+import Cookies from "js-cookie";
 // import Modaladdlog from "../components/modaladdlog";
 
 const MenteeLog = () => {
+  const router = useRouter();
   const [pagenow, setPagenow] = useState("Mentee Log");
   const [showModal, setShowModal] = useState(false);
   const [menteeId, setMenteeId] = useState(1);
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [mentee, setMentee] = useState("");
   const [file, setFile] = useState("");
+  const [logs, setLogs] = useState("");
+
+  // ------------------get api mentee log
+
+  useEffect(() => {
+    getMenteeLog();
+    getFeedback();
+  }, []);
+
+  const getMenteeLog = () => {
+    var axios = require("axios");
+
+    var config = {
+      method: "get",
+      url: `https://altagp3.online/mentees/${router.query.menteeId}`,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        // console.log(JSON.stringify(response.data.data));
+        setMentee(response.data.data);
+        setMenteeId(mentee.id);
+        setStatus(mentee.status);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  // -------------------- get feedback
+  const getFeedback = () => {
+    var axios = require("axios");
+    var data = JSON.stringify({
+      // mentee_id: menteeId,
+      // status: status,
+      // feedback: feedback,
+    });
+
+    var config = {
+      method: "get",
+      url: `https://altagp3.online/feedback?mentee_id=6`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data.data));
+        setLogs(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   // ------------------add Feedback
   const addFeedback = (e) => {
     e.preventDefault();
     var axios = require("axios");
-    var data = JSON.stringify({
-      mentee_id: menteeId,
-      status: status,
-      feedback: feedback,
-    });
+    var FormData = require("form-data");
+    // var fs = require("fs");
+    var data = new FormData();
+    // data.append("file", fs.createReadStream(file));
+    // data.append("file", file);
+    data.append("mentee_id", menteeId);
+    data.append("status", status);
+    data.append("feedback", feedback);
 
     var config = {
       method: "post",
-      url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/feedback",
+      url: "https://altagp3.online/feedback",
       headers: {
-        "Content-Type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        // ...data.getHeaders(),
       },
       data: data,
     };
@@ -59,20 +128,20 @@ const MenteeLog = () => {
             <div className="order-2 ml-10 md:ml-0 md:order-1 ">
               <div className="flex items-center mb-5">
                 <BsPersonBadge className="text-biruAlta " size={28} />
-                <p className="ml-5 text-xs font-roboto text-biruAlta">
-                  John Doe
+                <p className="ml-5 text-xs capitalize font-roboto text-biruAlta">
+                  {mentee.name}
                 </p>
               </div>
               <div className="flex items-center mb-5">
                 <ImLibrary className="text-biruAlta " size={28} />
-                <p className="ml-5 text-xs font-roboto text-biruAlta">
-                  Queality Engineer Batch 3
+                <p className="ml-5 text-xs uppercase font-roboto text-biruAlta">
+                  {mentee.major}
                 </p>
               </div>
               <div className="flex items-center mb-5">
                 <FaGraduationCap className="text-biruAlta" size={28} />
-                <p className="ml-5 text-xs font-roboto text-biruAlta">
-                  Politeknik Negeri Jakarta
+                <p className="ml-5 text-xs uppercase font-roboto text-biruAlta">
+                  {mentee.graduate}
                 </p>
               </div>
             </div>
@@ -91,19 +160,19 @@ const MenteeLog = () => {
               <div className="flex items-center mb-5">
                 <TbPhone className="text-biruAlta" size={28} />
                 <p className="ml-5 text-xs font-roboto text-biruAlta">
-                  08123456789
+                  {mentee.phone}
                 </p>
               </div>
               <div className="flex items-center mb-5 ">
                 <TbBrandTelegram className="text-biruAlta " size={28} />
                 <p className="ml-5 text-xs font-roboto text-biruAlta">
-                  @johndoe#2345
+                  {mentee.telegram}
                 </p>
               </div>
               <div className="flex items-center mb-5">
                 <TbMail className="text-biruAlta" size={28} />
                 <p className="ml-5 text-xs font-roboto text-biruAlta">
-                  John@alterra.id
+                  {mentee.email}
                 </p>
               </div>
             </div>
@@ -119,32 +188,36 @@ const MenteeLog = () => {
             </button>
           </div>
 
-          {/* card feedback */}
-          <div className="w-full p-2 mt-3 rounded-md shadow-md shadow-biruAlta/50 ">
-            <div className="flex flex-col items-center md:flex-row ">
-              <h3 className=" w-full md:w-[20%] px-2 text-center md:text-left text-base font-poppins text-biruAlta">
-                End of Section Bagas Sep 27, 2022
-              </h3>
-              <p className=" w-ful mt-2 md:mt-0 md:w-[80%] md:px-3 text-sm  font-roboto text-biruAlta">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis
-                obcaecati molestiae modi voluptatibus doloremque vero amet
-                maxime eos alias nesciunt! Repudiandae obcaecati nemo molestiae,
-                alias perferendis inventore assumenda, magnam dolores dolorum
-                consequatur nesciunt cum ipsum iure eum soluta adipisci
-                dignissimos laborum labore doloremque perspiciatis maiores,
-                suscipit modi. Perferendis deleniti fuga rerum odio fugiat,
-                reprehenderit officia deserunt amet sed expedita, repudiandae
-                libero? Error quod repellat nam quo sint odit quidem.
-                necessitatibus maxime quidem doloribus blanditiis molestiae.
-              </p>
-            </div>
-            <div className="flex items-center justify-center mt-5">
-              <h3 className="text-lg text-biruAlta">
-                Changed Status: Join Class{" "}
-              </h3>
-              <AiOutlineFieldTime size={28} className="ml-2 text-biruAlta" />
-            </div>
-          </div>
+          {/* card feedback  */}
+          {logs.map((log) => {
+            return (
+              <>
+                <div
+                  key={log.id}
+                  className="w-full p-2 my-5 rounded-md shadow-md shadow-biruAlta/50 "
+                >
+                  <div className="flex flex-col items-center md:flex-row ">
+                    <h3 className=" w-full md:w-[20%] px-2 text-center md:text-left text-base font-poppins text-biruAlta">
+                      {log.status} with {log.Name_Mentee}{" "}
+                    </h3>
+                    <p className=" w-ful mt-2 md:mt-0 md:w-[80%] md:px-3 text-sm  font-roboto text-biruAlta">
+                      {log.Feedback}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center mt-5">
+                    <h3 className="text-lg uppercase text-biruAlta">
+                      Changed Status: {log.status}
+                    </h3>
+                    <AiOutlineFieldTime
+                      size={28}
+                      className="ml-2 text-biruAlta"
+                    />
+                    <img src={log.file} alt="" className="w-32" />
+                  </div>
+                </div>
+              </>
+            );
+          })}
 
           {/* Modal */}
           {showModal ? (
@@ -194,15 +267,15 @@ const MenteeLog = () => {
                                 SVG, PNG, JPG or GIF (Maximum file size 10MB)
                               </p>
                             </div>
-                            <input
+                            {/* <input
                               id="dropzone-file"
                               type="file"
                               className="hidden"
-                              // onChange={(e) => {
-                              //   URL.createObjectURL(e.target.files[0]);
-                              //   setFile(e.target.files[0], "file");
-                              // }}
-                            />
+                              onChange={(e) => {
+                                URL.createObjectURL(e.target.files[0]);
+                                setFile(e.target.files[0], "file");
+                              }}
+                            /> */}
                           </label>
                         </div>
 
@@ -245,7 +318,7 @@ const MenteeLog = () => {
                         ></textarea>
 
                         {/* button */}
-                        <div className="flex items-center justify-end mt-3 rounded-b p- border-blueGray-200 bb ">
+                        <div className="flex items-center justify-end mt-3 rounded-b p- border-blueGray-200 ">
                           <button
                             className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded outline-none background-transparent hover:shadow-lg bg-orangeAlta focus:outline-none"
                             type="button"
