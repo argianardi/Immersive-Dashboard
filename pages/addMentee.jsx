@@ -53,11 +53,11 @@ const AddMentee = () => {
       telegram: telegram,
       phone: phoneEd,
       category: type,
-      name_ed: "wali mentee",
-      phone_ed: "085711223344",
-      status_ed: "Orang Tua",
-      major: "Teknik Komputer",
-      graduate: "2015",
+      name_ed: nameEd,
+      phone_ed: phoneEd,
+      status_ed: status,
+      major: major,
+      graduate: graduate,
     });
 
     var config = {
@@ -73,6 +73,9 @@ const AddMentee = () => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        Router.push({ pathname: "/menteelist" });
+        // Router.push(`/menteelist`);
+        // router.push({"/menteelist"});
       })
       .catch(function (error) {
         console.log(error);
