@@ -17,4 +17,5 @@ const Inputaddmentee = ({ label, type, placeholder, onChange }) => {
   );
 };
 
+
 export default Inputaddmentee;

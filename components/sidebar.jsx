@@ -6,7 +6,24 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
-import Link from "next/link";
+import Link from "next/link"
+import cookie from "js-cookie";
+import Router from "next/router";
+
+const Sidebar = ({ pagenow }) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleLogOut = async () => {
+        await cookie.remove("token");
+        await cookie.remove("role");
+        await Router.push({ pathname: "/" });
+    };
 
 const Sidebar = ({ pagenow }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -55,7 +72,7 @@ const Sidebar = ({ pagenow }) => {
               onClick={handleClose}
             >
               <Icon className="mr-2 " icon="carbon:dashboard" />
-              Dasboarb
+              Dasboard
             </MenuItem>
           </Link>
 
