@@ -32,7 +32,7 @@ const Menteelist = () => {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data.data));
+        // console.log(JSON.stringify(response.data.data));
         setMentees(response.data.data);
       })
       .catch(function (error) {
@@ -72,6 +72,17 @@ const Menteelist = () => {
   const editMentee = (menteeId) => {
     Router.push({
       pathname: `/editmentee`,
+      query: {
+        menteeId: menteeId,
+      },
+    });
+  };
+
+  // ---------------push to mentee log
+  const getMenteeLog = (menteeId) => {
+    // console.log(menteeId);
+    Router.push({
+      pathname: `/mentee-log`,
       query: {
         menteeId: menteeId,
       },
@@ -162,7 +173,10 @@ const Menteelist = () => {
                     <td>{item.category}</td>
                     <td>{item.gender}</td>
                     <td>
-                      <button className="active:bg-[#1B345F] text-[#21a41f] active:text-white rounded">
+                      <button
+                        className="active:bg-[#1B345F] text-[#21a41f] active:text-white rounded "
+                        onClick={() => getMenteeLog(item.id)}
+                      >
                         <Icon
                           icon="bxs:user-detail"
                           color="#1b345f"
