@@ -13,6 +13,39 @@ import Sidebar from "../components/sidebar";
 const MenteeLog = () => {
   const [pagenow, setPagenow] = useState("Mentee Log");
   const [showModal, setShowModal] = useState(false);
+  const [menteeId, setMenteeId] = useState(1);
+  const [status, setStatus] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [file, setFile] = useState("");
+
+  // ------------------add Feedback
+  const addFeedback = (e) => {
+    e.preventDefault();
+    var axios = require("axios");
+    var data = JSON.stringify({
+      mentee_id: menteeId,
+      status: status,
+      feedback: feedback,
+    });
+
+    var config = {
+      method: "post",
+      url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/feedback",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="w-full min-h-screen sm:flex ">
       <Sidebar pagenow={pagenow} />
@@ -116,11 +149,14 @@ const MenteeLog = () => {
           {/* Modal */}
           {showModal ? (
             <>
-              <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+              <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none ">
                 <div className="relative w-auto max-w-3xl mx-auto my-6">
                   <div className="relative flex flex-col w-full bg-white rounded-lg shadow-lg outline-none focus:outline-none">
-                    <div className="relative flex-auto p-0 sm:p-6 ">
-                      <form className="w-full px-8 pt-6 pb-8 rounded shadow-md">
+                    <div className="relative flex-auto p-0 sm:p-3 ">
+                      <form
+                        className="w-full px-8 py-6 rounded shadow-md"
+                        onSubmit={(e) => addFeedback(e)}
+                      >
                         <div className="flex mb-2 justify-evenly">
                           <label className="block mr-auto text-sm font-bold text-biruAlta">
                             Upload and Attach Files
@@ -162,9 +198,14 @@ const MenteeLog = () => {
                               id="dropzone-file"
                               type="file"
                               className="hidden"
+                              // onChange={(e) => {
+                              //   URL.createObjectURL(e.target.files[0]);
+                              //   setFile(e.target.files[0], "file");
+                              // }}
                             />
                           </label>
                         </div>
+
                         <label className="block mt-4 mb-1 text-sm font-bold text-biruAlta">
                           Status
                         </label>
@@ -174,8 +215,19 @@ const MenteeLog = () => {
                               className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-biruAlta bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-putihAlta shadow focus:outline-none"
                               aria-label="Default select example"
                             >
-                              <option value="1">Active</option>
-                              <option value="2">Non-Active</option>
+                              <option value="1">--Pilih Status--</option>
+                              <option
+                                value="2"
+                                onClick={(e) => setStatus("Active")}
+                              >
+                                Active
+                              </option>
+                              <option
+                                value="3"
+                                onClick={(e) => setStatus("Non-Active")}
+                              >
+                                Non-Active
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -189,23 +241,26 @@ const MenteeLog = () => {
                           id=""
                           cols="30"
                           rows="4"
+                          onChange={(e) => setFeedback(e.target.value)}
                         ></textarea>
+
+                        {/* button */}
+                        <div className="flex items-center justify-end mt-3 rounded-b p- border-blueGray-200 bb ">
+                          <button
+                            className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded outline-none background-transparent hover:shadow-lg bg-orangeAlta focus:outline-none"
+                            type="button"
+                            onClick={() => setShowModal(false)}
+                          >
+                            Close
+                          </button>
+                          <button
+                            className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-biruAlta active:bg-yellow-700 hover:shadow-lg focus:outline-none"
+                            type="submit"
+                          >
+                            Save
+                          </button>
+                        </div>
                       </form>
-                    </div>
-                    <div className="flex items-center justify-end rounded-b p- border-blueGray-200 ">
-                      <button
-                        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded outline-none background-transparent hover:shadow-lg bg-orangeAlta focus:outline-none"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase rounded shadow outline-none bg-biruAlta active:bg-yellow-700 hover:shadow-lg focus:outline-none"
-                        type="button"
-                      >
-                        Save
-                      </button>
                     </div>
                   </div>
                 </div>

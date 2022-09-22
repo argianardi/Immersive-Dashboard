@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Doubleradio from "../components/doubleradio";
 import Formaddmentee from "../components/formaddmentee";
 import Inputaddmentee from "../components/inputaddmentee";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
+import Router, { useRouter } from "next/router";
 
 const AddMentee = () => {
   const router = useRouter();
@@ -24,6 +24,44 @@ const AddMentee = () => {
   const [graduate, setGraduate] = useState("");
   const [mentees, setMentees] = useState([]);
 
+  //   const addNewMentee = (e) => {
+  //     e.preventDefault();
+  //     // var axios = require("axios");
+  //     // var data = JSON.stringify({
+  //     //   name: name,
+  //     //   gender: gender,
+  //     //   address: address,
+  //     //   home_address: homeAddress,
+  //     //   class_id: 1,
+  //     //   email: email,
+  //     //   telegram: telegram,
+  //     //   phone: "085712344321",
+  //     //   category: type,
+  //     //   name_ed: nameEd,
+  //     //   phone_ed: phoneEd,
+  //     //   status_ed: status,
+  //     //   major: major,
+  //     //   graduate: graduate,
+  //     // });
+
+  //     // var config = {
+  //     //   method: "post",
+  //     //   url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees",
+  //     //   headers: {
+  //     //     "Content-Type": "application/json",
+  //     //   },
+  //     //   data: data,
+  //     // };
+
+  //     // axios(config)
+  //     //   .then(function (response) {
+  //     //     console.log(JSON.stringify(response));
+  //     //   })
+  //     //   .catch(function (error) {
+  //     //     console.log(error);
+  //     //   });
+  //   };
+
   const handleGender = (event) => {
     setGender(event.target.value);
     console.log(event.target.value);
@@ -37,8 +75,8 @@ const AddMentee = () => {
     console.log(event.target.value);
   };
 
-  //   -----------------post mentee
-  const handleAddMentee = () => {
+  //   -----------------put mentee
+  const editMentee = () => {
     // console.log("berhasil menambahkan");
     var axios = require("axios");
     var data = JSON.stringify({
@@ -49,7 +87,7 @@ const AddMentee = () => {
       class_id: classId,
       email: email,
       telegram: telegram,
-      phone: "085712344321",
+      phone: phoneEd,
       category: type,
       name_ed: nameEd,
       phone_ed: phoneEd,
@@ -59,8 +97,8 @@ const AddMentee = () => {
     });
 
     var config = {
-      method: "post",
-      url: "https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees",
+      method: "put",
+      url: `https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/mentees/${router.query.menteeId}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -173,13 +211,13 @@ const AddMentee = () => {
           <button
             className="rounded-lg bg-[#F7731C] text-lg py-2 w-28 mr-5 text-white"
             onClick={() => {
-              router.push("/menteelist");
+              Router.push("/menteelist");
             }}
           >
             Cancel
           </button>
           <button
-            onClick={() => handleAddMentee()}
+            onClick={() => editMentee()}
             className="rounded-lg bg-[#1B345F] text-lg py-2 w-28 text-white"
             type="submit"
           >

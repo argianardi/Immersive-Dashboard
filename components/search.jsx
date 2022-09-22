@@ -1,4 +1,5 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 const Search = ({ showingmodal }) => {
     return (
@@ -10,4 +11,4 @@ const Search = ({ showingmodal }) => {
     )
 }
 
-export default Search
+export default Search;
