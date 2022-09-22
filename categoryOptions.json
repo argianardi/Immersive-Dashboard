@@ -1,0 +1,14 @@
+[
+    {
+        "value": "all",
+        "category": "All Categories"
+    },
+    {
+        "value": "IT",
+        "category": "Informatics"
+    },
+    {
+        "value": "non-IT",
+        "category": "Non-Informatics"
+    }
+]
