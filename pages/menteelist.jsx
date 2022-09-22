@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import Pagination from "@mui/material/Pagination";
@@ -6,34 +6,46 @@ import Search from "../components/search";
 import { Icon } from "@iconify/react";
 import Router, { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import categoryOptions from "../categoryOptions.json";
 
 const Menteelist = () => {
     const [pageApi, setPageApi] = useState(1);
     const [pagenow, setPagenow] = useState("Mentee List");
     const router = useRouter();
     const [mentees, setMentees] = useState([]);
-    const [category, setCategory] = useState("IT");
+    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [dataFilter, setDataFilter] = useState(false);
 
     // -----------------get mentee
     useEffect(() => {
         getMentee();
-    }, []);
+    }, [dataFilter]);
 
     const getMentee = () => {
         var axios = require("axios");
 
-        var config = {
-            method: "get",
-            url: "https://altagp3.online/mentees",
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-        };
+        if (selectedCategory === "all") {
+            var config = {
+                method: "get",
+                url: "https://altagp3.online/mentees",
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                },
+            };
+        } else {
+            var config = {
+                method: "get",
+                url: `https://altagp3.online/mentees?category=${selectedCategory}`,
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                },
+            };
+        }
 
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data.data));
                 setMentees(response.data.data);
             })
             .catch(function (error) {
@@ -95,26 +107,9 @@ const Menteelist = () => {
         });
     };
 
-    // filter by category
-    const filterMenteeByCategory = () => {
-        var axios = require("axios");
-        var config = {
-            method: "get",
-            url: `https://altagp3.online/mentees?category=${category}`,
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-        };
-
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data.data));
-                setMentees(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    //on click untuk mentrigger category
+    const clickCategory = () => {
+        setDataFilter(!dataFilter);
     };
 
     return (
@@ -144,13 +139,25 @@ const Menteelist = () => {
                             </select>
                         </form>
                         <form className=" mx-0.5">
-                            <select className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]" id="status" name="status" onClick={() => filterMenteeByCategory()}>
-                                <option value="All Class">All Categories</option>
-                                <option value="QE 7">Informatics</option>
-                                <option value="FE 8">Non-Informatics</option>
+                            <select
+                                className="w-32 h-9 rounded-lg border-[1px] border-[#1B345F]"
+                                id="status"
+                                name="status"
+                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                value={selectedCategory}
+                            >
+                                {categoryOptions.map((option, i) => {
+                                    return (
+                                        <option value={option.value} key={i}>
+                                            {option.category}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </form>
-                        <button className="hilang:my-2 ml-0.5 w-32 h-9 text-sm text-white rounded-lg bg-[#1B345F]">Filter</button>
+                        <button className="hilang:my-2 ml-0.5 w-32 h-9 text-sm text-white rounded-lg bg-[#1B345F]" onClick={clickCategory}>
+                            Filter
+                        </button>
                     </div>
                 </div>
                 {/* Tabel */}
