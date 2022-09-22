@@ -4,6 +4,7 @@ import Router from "next/router";
 import { useState } from "react";
 import { BiCookie, BiLockAlt, BiMailSend } from "react-icons/bi";
 import cookie from "js-cookie";
+import { Password } from "@mui/icons-material";
 
 export default function Home() {
     const [email, setEmail] = useState("");
@@ -11,17 +12,43 @@ export default function Home() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios
-            .post("https://virtserver.swaggerhub.com/muhdwiar/groupProjek3/1.0/login", {
-                email: email,
-                password: password,
-            })
-            .then((response) => {
+        // await axios
+        //     .post("https://altagp3.online/login", {
+        //         email: email,
+        //         password: password,
+        //     })
+        //     .then((response) => {
+        //         cookie.set("token", response.data.token);
+        //         cookie.set("role", response.data.role);
+        //         response.data.data.role === "admin" ? Router.push({ pathname: "/dashboard" }) : Router.push({ pathname: "/testing" });
+        //     })
+        //     .catch((error) => {
+        //         alert(error, "email yang anda masukan salah");
+        //     });
+        var axios = require("axios");
+        var data = JSON.stringify({
+            email: email,
+            password: password,
+        });
+
+        var config = {
+            method: "post",
+            url: "https://altagp3.online/login",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: data,
+        };
+
+        axios(config)
+            .then(function (response) {
                 cookie.set("token", response.data.data.token);
                 cookie.set("role", response.data.data.role);
-                response.data.data.role === "superadmin" ? Router.push({ pathname: "/dashboard" }) : Router.push({ pathname: "/testing" });
+                response.data.data.role === "admin" ? Router.push({ pathname: "/dashboard" }) : Router.push({ pathname: "/userlist" });
             })
-            .catch((error) => console.log(error));
+            .catch(function (error) {
+                console.log(error);
+            });
     };
 
     return (
@@ -68,7 +95,7 @@ export default function Home() {
                                         className="font-Roboto font-normal w-full text-base pl-6 border-[#25732D] text-black rounded-xl shadow-lg block  p-3 dark:shadow-md  "
                                         placeholder="Email"
                                         required
-                                        onChange={(e) => setEmail({ ...email, email: e.target.value })}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
                                 <div className="flex items-center px-0 sm:px-3">
@@ -78,7 +105,7 @@ export default function Home() {
                                         className=" w-full  font-Roboto font-normal text-base pl-6 border-[#25732D] text-black rounded-xl shadow-lg  block  py-3  "
                                         placeholder="Password"
                                         required
-                                        onChange={(e) => setPassword({ ...password, password: e.target.value })}
+                                        onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
                                 <div className="ml-2">
