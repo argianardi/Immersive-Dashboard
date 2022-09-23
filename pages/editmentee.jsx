@@ -56,16 +56,15 @@ const AddMentee = () => {
             graduate: graduate,
         });
 
-        var config = {
-            method: "put",
-            url: "https://altagp3.online/mentees/10",
-            headers: {
-                Authorization: `Bearer ${Cookies.get("token")}`,
-                "Content-Type": "application/json",
-            },
-            data: data,
-        };
-
+    var config = {
+      method: "put",
+      url: `https://altagp3.online/mentees/${router.query.menteeId}`,
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
         axios(config)
             .then(function (response) {
                 // console.log(JSON.stringify(response.data));
