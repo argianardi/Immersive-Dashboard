@@ -1,0 +1,18 @@
+[
+    {
+        "value": "all",
+        "status": "All Status"
+    },
+    {
+        "value": "interview",
+        "status": "Interview"
+    },
+    {
+        "value": "active",
+        "status": "Active"
+    },
+    {
+        "value": "eleminate",
+        "status": "Eleminate"
+    }
+]
