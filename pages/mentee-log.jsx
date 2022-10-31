@@ -43,7 +43,7 @@ const MenteeLog = () => {
 
     axios(config)
       .then(function (response) {
-        // console.log(JSON.stringify(response.data.data));
+        console.log(JSON.stringify(response.data.data));
         setMentee(response.data.data);
         setMenteeId(mentee.id);
         setStatus(mentee.status);
@@ -64,7 +64,7 @@ const MenteeLog = () => {
 
     var config = {
       method: "get",
-      url: `https://altagp3.online/feedback?mentee_id=6`,
+      url: `https://altagp3.online/feedback?mentee_id=${router.query.menteeId}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
@@ -74,6 +74,7 @@ const MenteeLog = () => {
 
     axios(config)
       .then(function (response) {
+        console.log("--------------------------");
         console.log(JSON.stringify(response.data.data));
         setLogs(response.data.data);
       })
@@ -188,36 +189,39 @@ const MenteeLog = () => {
             </button>
           </div>
 
+          {/* {logs?(logs.map((log)=>{isi return dan lain lain})):null} */}
           {/* card feedback  */}
-          {logs.map((log) => {
-            return (
-              <>
-                <div
-                  key={log.id}
-                  className="w-full p-2 my-5 rounded-md shadow-md shadow-biruAlta/50 "
-                >
-                  <div className="flex flex-col items-center md:flex-row ">
-                    <h3 className=" w-full md:w-[20%] px-2 text-center md:text-left text-base font-poppins text-biruAlta">
-                      {log.status} with {log.Name_Mentee}{" "}
-                    </h3>
-                    <p className=" w-ful mt-2 md:mt-0 md:w-[80%] md:px-3 text-sm  font-roboto text-biruAlta">
-                      {log.Feedback}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-center mt-5">
-                    <h3 className="text-lg uppercase text-biruAlta">
-                      Changed Status: {log.status}
-                    </h3>
-                    <AiOutlineFieldTime
-                      size={28}
-                      className="ml-2 text-biruAlta"
-                    />
-                    <img src={log.file} alt="" className="w-32" />
-                  </div>
-                </div>
-              </>
-            );
-          })}
+          {logs
+            ? logs.map((log) => {
+                return (
+                  <>
+                    <div
+                      key={log.id}
+                      className="w-full p-2 my-5 rounded-md shadow-md shadow-biruAlta/50 "
+                    >
+                      <div className="flex flex-col items-center md:flex-row ">
+                        <h3 className=" w-full md:w-[20%] px-2 text-center md:text-left text-base font-poppins text-biruAlta">
+                          {log.status} with {log.Name_Mentee}{" "}
+                        </h3>
+                        <p className=" w-ful mt-2 md:mt-0 md:w-[80%] md:px-3 text-sm  font-roboto text-biruAlta">
+                          {log.Feedback}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-center mt-5">
+                        <h3 className="text-lg uppercase text-biruAlta">
+                          Changed Status: {log.status}
+                        </h3>
+                        <AiOutlineFieldTime
+                          size={28}
+                          className="ml-2 text-biruAlta"
+                        />
+                        <img src={log.file} alt="" className="w-32" />
+                      </div>
+                    </div>
+                  </>
+                );
+              })
+            : null}
 
           {/* Modal */}
           {showModal ? (
